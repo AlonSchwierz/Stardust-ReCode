@@ -62,5 +62,5 @@ public class Conveyor extends SubsystemBase {
             return  "Unknown";
         }
     }
-    
+
 }
