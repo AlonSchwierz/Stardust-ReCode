@@ -1,31 +1,16 @@
-package frc.robot.subsystems.Helicopter;
+package frc.robot.subsystems.helicopter;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.simulation.BatterySim;
-import edu.wpi.first.wpilibj.simulation.RoboRioSim;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Helicopter extends SubsystemBase {
@@ -60,7 +45,7 @@ public class Helicopter extends SubsystemBase {
          */
         mainMotor.configMotionCruiseVelocity(Constants.Helicopter.CRUISE_VELOCITY);
         mainMotor.configMotionAcceleration(Constants.Helicopter.MAXIMAL_ACCELERATION);
-        configPID();
+//        configPID();
 
 
         auxMotor.follow(mainMotor);
@@ -126,4 +111,9 @@ public class Helicopter extends SubsystemBase {
         var error = position.minus(currentPosition);
         Rotation2d minMove = new Rotation2d(Math.IEEEremainder(unitModelPosition.toTicks(error.getRadians()), Math.PI * 2));
     }
+
+    public void stop() {
+        mainMotor.stopMotor();
+    }
+
 }
