@@ -66,4 +66,7 @@ public static class Helicopter{
 
     public static final boolean VOLTAGE_COMPENSATION = true;
 }
+public static class SHOOTER{
+    public static final double SpeedForDistance = 0;
+    }
 }

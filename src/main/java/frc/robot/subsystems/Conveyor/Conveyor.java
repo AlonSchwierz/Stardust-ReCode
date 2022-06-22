@@ -49,18 +49,5 @@ public class Conveyor extends SubsystemBase {
         return postFlapBeam.get();
     }
 
-    public String GetColor(){
-        if (match.color == kBlueTarget) {
-            return  "Blue";
-        } else if (match.color == kRedTarget) {
-            return "Red";
-        } else if (match.color == kGreenTarget) {
-            return  "Green";
-        } else if (match.color == kYellowTarget) {
-            return  "Yellow";
-        } else {
-            return  "Unknown";
-        }
-    }
 
 }
