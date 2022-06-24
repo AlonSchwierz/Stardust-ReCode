@@ -35,5 +35,20 @@ public class Ports {
         public static final int postFlapBeam = 0;
 
         public static final Boolean isMotorInverted = null;
+
+        public static final TalonFXInvertType MOTOR_INVERSION = TalonFXInvertType.Clockwise;
+
+        public static final boolean IS_COMPENSATING_VOLTAGE = true;
+
+
+    }
+    public static class Shooter{
+        public static final int MAIN_MOTOR = 0;
+        public static final int AUX_MOTOR = 0;
+
+    }
+
+    public static class Flap{
+        public static final int SOLENOID = 0;
     }
 }

@@ -19,7 +19,6 @@ public class PipeLine extends SubsystemBase {
                 Intake.setPower(8);
                 Intake.closeREEEtractor();
             case "convey":
-                Conveyor.
         }
     }
 

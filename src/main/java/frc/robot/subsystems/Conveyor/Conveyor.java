@@ -1,8 +1,10 @@
 package frc.robot.subsystems.Conveyor;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -16,6 +18,9 @@ import com.revrobotics.ColorSensorV3;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import static frc.robot.Ports.Conveyor.IS_COMPENSATING_VOLTAGE;
+import static frc.robot.Ports.Conveyor.MOTOR_INVERSION;
 
 public class Conveyor extends SubsystemBase {
     private static Conveyor INSTANCE = null;
@@ -31,6 +36,13 @@ public class Conveyor extends SubsystemBase {
     private final UnitModel unitModel = new UnitModel(Constants.Conveyor.TICKS_PER_UNIT);
 
     private final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kMXP);
+
+    private Conveyor(){
+        motor.setInverted(MOTOR_INVERSION);
+        motor.enableVoltageCompensation(IS_COMPENSATING_VOLTAGE);
+        motor.configVoltageCompSaturation(Constants.NOMINAL_VOLTAGE);
+
+    }
 
 
     public void setPower(double power) {
