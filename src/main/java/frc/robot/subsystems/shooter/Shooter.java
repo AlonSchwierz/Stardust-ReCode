@@ -24,11 +24,18 @@ import static frc.robot.Ports.Shooter.*;
 public class Shooter extends SubsystemBase {
     private static Shooter INSTANCE;
     private final UnitModel unitModel = new UnitModel(TICKS_PER_REVOLUTION);
-    private static final WPI_TalonFX mainMotor = new WPI_TalonFX(MAIN_MOTOR);
+    private final WPI_TalonFX mainMotor = new WPI_TalonFX(MAIN_MOTOR);
     private final WPI_TalonFX auxMotor = new WPI_TalonFX(AUX_MOTOR);
     private final DataLogEntry shooterVelocity;
     private final DataLogEntry shooterVoltage;
 
+    public static Shooter getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Shooter();
+        }
+
+        return INSTANCE;
+    }
 
     private Shooter() {
         configureMotor();
@@ -39,20 +46,20 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    public static void setPower(double power) {
+    public void setPower(double power) {
         mainMotor.set(power);
     }
 
-    public static double getPower() {
+    public double getPower() {
         return mainMotor.get();
     }
 
-    public static double returnSpeedForDistance() {
+    public double returnSpeedForDistance() {
         double SpeedForDistance = Constants.SHOOTER.SpeedForDistance;
         return SpeedForDistance;
     }
 
-    public static double returnSpeedForEnemysBalls() {
+    public double returnSpeedForEnemysBalls() {
         return 88;
     }
 

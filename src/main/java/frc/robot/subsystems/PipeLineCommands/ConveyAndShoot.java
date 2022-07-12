@@ -6,27 +6,29 @@ import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class ConveyAndShoot extends CommandBase {
+    private final Flap flap;
+
+    public ConveyAndShoot() {
+        flap = Flap.getInstance();
+        addRequirements(flap, Conveyor.getInstance(), Shooter.getInstance());
+    }
+
     @Override
     public void initialize() {
-        Shooter.setPower(Shooter.returnSpeedForDistance());
-        Flap.ShallPass();
+        Shooter.getInstance().setPower(Shooter.getInstance().returnSpeedForDistance());
+        Flap.getInstance().ShallPass();
     }
 
     @Override
     public void execute() {
-        Conveyor.setPower(8);
-        Shooter.setPower(Shooter.returnSpeedForDistance());
+        Conveyor.getInstance().setPower(8);
+        Shooter.getInstance().setPower(Shooter.getInstance().returnSpeedForDistance());
     }
 
     @Override
     public void end(boolean interrupted) {
-        Flap.ShallNotPass();
-        Conveyor.setPower(0);
-        Shooter.setPower(0);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return super.isFinished();
+        Flap.getInstance().ShallNotPass();
+        Conveyor.getInstance().setPower(0);
+        Shooter.getInstance().setPower(0);
     }
 }

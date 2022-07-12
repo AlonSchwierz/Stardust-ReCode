@@ -25,27 +25,33 @@ import static frc.robot.Ports.Conveyor.MOTOR_INVERSION;
 public class Conveyor extends SubsystemBase {
     private static Conveyor INSTANCE = null;
 
-    private final WPI_TalonFX motor = new WPI_TalonFX(Ports.Conveyor.MOTOR);
+    private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Conveyor.MOTOR);
 
     private final Deque<DriverStation.Alliance> cargoPositions = new ArrayDeque<>();
 
-    private final DigitalInput postFlapBeam = new DigitalInput(Ports.Conveyor.postFlapBeam);
+    private static final DigitalInput postFlapBeam = new DigitalInput(Ports.Conveyor.postFlapBeam);
 
-    private final DigitalInput preFlapBeam = new DigitalInput(Ports.Conveyor.preFlapBeam);
+    private static final DigitalInput preFlapBeam = new DigitalInput(Ports.Conveyor.preFlapBeam);
 
     private final UnitModel unitModel = new UnitModel(Constants.Conveyor.TICKS_PER_UNIT);
 
     private final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kMXP);
 
-    private Conveyor(){
+    public static Conveyor getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Conveyor();
+        }
+        return INSTANCE;
+    }
+
+    private Conveyor() {
         motor.setInverted(MOTOR_INVERSION);
         motor.enableVoltageCompensation(IS_COMPENSATING_VOLTAGE);
         motor.configVoltageCompSaturation(Constants.NOMINAL_VOLTAGE);
 
     }
 
-
-    public void setPower(double power) {
+    public  void setPower(double power) {
         motor.set(power);
     }
 
@@ -53,11 +59,11 @@ public class Conveyor extends SubsystemBase {
         return motor.get();
     }
 
-    public boolean CargoInFrontOfPre() {
+    public boolean IsCargoInFrontOfPre() {
         return preFlapBeam.get();
     }
 
-    public boolean CargoInFrontOfPost() {
+    public boolean IsCargoInFrontOfPost() {
         return postFlapBeam.get();
     }
 

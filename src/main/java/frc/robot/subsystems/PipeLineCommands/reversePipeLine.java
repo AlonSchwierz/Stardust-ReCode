@@ -9,21 +9,21 @@ import frc.robot.subsystems.shooter.Shooter;
 public class reversePipeLine extends CommandBase {
     @Override
     public void initialize() {
-        Flap.ShallPass();
+        Flap.getInstance().ShallPass();
     }
 
     @Override
     public void execute() {
-        Intake.setPower(-8);
-        Conveyor.setPower(-8);
-        Shooter.setPower(-8);
+        Intake.getInstance().setPower(-8);
+        Conveyor.getInstance().setPower(-8);
+        Shooter.getInstance().setPower(-8);
     }
 
     @Override
     public void end(boolean interrupted) {
-        Intake.setPower(0);
-        Conveyor.setPower(0);
-        Shooter.setPower(0);
+        Intake.getInstance().setPower(0);
+        Conveyor.getInstance().setPower(0);
+        Shooter.getInstance().setPower(0);
 
     }
 

@@ -10,11 +10,11 @@ import frc.robot.subsystems.shooter.Shooter;
 public class stopUsingPipeline extends CommandBase {
     @Override
     public void initialize() {
-        Intake.closeREEEtractor();
-        Intake.setPower(0);
-        Conveyor.setPower(0);
-        Shooter.setPower(0);
-        Flap.ShallNotPass();
+        Intake.getInstance().closeREEEtractor();
+        Intake.getInstance().setPower(0);
+        Conveyor.getInstance().setPower(0);
+        Shooter.getInstance().setPower(0);
+        Flap.getInstance().ShallNotPass();
     }
 
 

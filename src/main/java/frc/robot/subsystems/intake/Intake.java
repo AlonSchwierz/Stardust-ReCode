@@ -15,6 +15,7 @@ public class Intake extends SubsystemBase {
     private static Intake INSTANCE;
 
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Intake.MOTOR);
+    private static final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM ,Ports.Intake.Solenoid);
 
 //    private final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Intake.SOLENOID);
 
@@ -38,20 +39,20 @@ public class Intake extends SubsystemBase {
         return INSTANCE;
     }
 
-    public static double getPower() {
+    public double getPower() {
         return motor.get();
     }
 
-    public static void setPower(double power) {
+    public void setPower(double power) {
         motor.set(power);
     }
 
-    public static void openREEEtractor(){
-//        retractor.set(true);
+    public void openREEEtractor(){
+      retractor.set(true);
     }
 
-    public static void closeREEEtractor(){
-//        retractor.set(false);
+    public void closeREEEtractor(){
+        retractor.set(false);
     }
 
 }

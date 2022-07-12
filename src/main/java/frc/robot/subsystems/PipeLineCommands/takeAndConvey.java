@@ -10,14 +10,14 @@ import frc.robot.subsystems.shooter.Shooter;
 public class takeAndConvey extends CommandBase {
     @Override
     public void initialize() {
-        Intake.openREEEtractor();
-        Flap.ShallNotPass();
+        Intake.getInstance().openREEEtractor();
+        Flap.getInstance().ShallNotPass();
     }
 
     @Override
     public void execute() {
-        Intake.setPower(8);
-        Conveyor.setPower(8);
+        Intake.getInstance().setPower(8);
+        Conveyor.getInstance().setPower(8);
 
 
     }
@@ -25,10 +25,12 @@ public class takeAndConvey extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Flap.ShallPass();
-        Intake.setPower(0);
-        Conveyor.setPower(0);
-
+        Intake.getInstance().setPower(0);
+        Conveyor.getInstance().setPower(0);
     }
 
-
+    @Override
+    public boolean isFinished() {
+        return Conveyor.getInstance().IsCargoInFrontOfPre();
+    }
 }
