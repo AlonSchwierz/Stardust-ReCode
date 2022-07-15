@@ -57,6 +57,11 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
         return mainMotor.get();
     }
 
+    public double getVelocity() {
+        return unitModel.toTicks100ms(mainMotor.getSelectedSensorVelocity());
+    }
+
+
     public double returnSpeedForDistance() {
         double SpeedForDistance = Constants.SHOOTER.SpeedForDistance;
         return SpeedForDistance;

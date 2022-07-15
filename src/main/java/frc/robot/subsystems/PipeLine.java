@@ -27,12 +27,14 @@ public class PipeLine extends CommandBase {
     @Override
     public void execute() {
         switch (pipelineState.get()) {
+
             case Idle:
                 intake.closeREEEtractor();
                 intake.setPower(0);
                 conveyor.setPower(0);
                 flap.ShallNotPass();
                 shooter.setPower(0);
+                hood.changeAngleForDistance();
                 break;
 
             case feed:
@@ -42,7 +44,7 @@ public class PipeLine extends CommandBase {
 
             case shoot:
                 flap.ShallPass();
-                shooter.setVelocity(3500);
+                shooter.setVelocity(shooter.returnSpeedForDistance());
                 break;
 
             case convey:
@@ -50,18 +52,22 @@ public class PipeLine extends CommandBase {
                 conveyor.setPower(8);
                 break;
 
+            case warmup:
+                shooter.setVelocity(shooter.returnSpeedForDistance());
+                break;
             case feedAndConvey:
                 intake.openREEEtractor();
                 intake.setPower(8);
+                conveyor.setPower(8);
                 break;
 
             case conveyAndShoot:
                 flap.ShallPass();
                 conveyor.setPower(8);
                 shooter.setPower(8);
+                hood.changeAngleForDistance();
                 break;
             case reversePipeline:
-                flap.ShallPass();
                 conveyor.setPower(-8);
                 intake.setPower(-8);
             default:
@@ -69,8 +75,16 @@ public class PipeLine extends CommandBase {
         }
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        intake.setPower(0);
+        conveyor.setPower(0);
+        flap.ShallNotPass();
+        shooter.setPower(0);
+    }
+
     public enum Cases {
-        feed, convey, shoot, feedAndConvey, conveyAndShoot, Idle, reversePipeline
+        feed, convey, shoot, feedAndConvey, conveyAndShoot, Idle, reversePipeline, warmup
 
     }
 }

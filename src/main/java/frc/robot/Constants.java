@@ -8,7 +8,6 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -87,5 +86,12 @@ public final class Constants {
 
     public static class Conveyor {
         public static final double TICKS_PER_UNIT = 0;
+    }
+
+    public static class Hood {
+        public static final double DISTANCE_FOR_ANGLE = 0;
+        public static final double DISTANCE_FROM_TARGET = 0;
+
+
     }
 }

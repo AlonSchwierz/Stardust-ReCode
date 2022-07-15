@@ -8,8 +8,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Conveyor.Conveyor;
+import frc.robot.subsystems.Flap.Flap;
+import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.PipeLine;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.shooter.Shooter;
+
+import java.util.function.Supplier;
 
 
 /**
@@ -19,10 +25,18 @@ import frc.robot.subsystems.PipeLine;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+    private final Intake intake = Intake.getInstance();
+    private final Conveyor conveyor = Conveyor.getInstance();
+    private final Shooter shooter = Shooter.getInstance();
+    private final Flap flap = Flap.getInstance();
+    private final Hood hood = Hood.getInstance();
+
     private final XboxController xbox = new XboxController(Ports.Controls.XBOX);
     private final JoystickButton a = new JoystickButton(xbox, XboxController.Button.kA.value);
     private final JoystickButton b = new JoystickButton(xbox, XboxController.Button.kB.value);
     private final JoystickButton x = new JoystickButton(xbox, XboxController.Button.kX.value);
+    private final JoystickButton y = new JoystickButton(xbox, XboxController.Button.kY.value);
     private final JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
 
     public RobotContainer() {
@@ -31,12 +45,7 @@ public class RobotContainer {
     }
 
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
+
     private void configureButtonBindings() {
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
     }
@@ -47,10 +56,17 @@ public class RobotContainer {
             return PipeLine.Cases.feedAndConvey;
         }
         if (b.get()) {
-            return PipeLine.Cases.conveyAndShoot;
+            if (shooter.getVelocity() == shooter.returnSpeedForDistance()) {
+                return PipeLine.Cases.conveyAndShoot;
+            }
+            return PipeLine.Cases.warmup;
         }
+
         if (x.get()) {
-            return
+            return PipeLine.Cases.reversePipeline;
+        }
+        if (y.get()){
+
         }
         return PipeLine.Cases.Idle;
     }

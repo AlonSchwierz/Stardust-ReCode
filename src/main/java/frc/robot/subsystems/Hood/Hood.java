@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Ports;
 
 public class Hood extends SubsystemBase {
@@ -25,11 +26,18 @@ public class Hood extends SubsystemBase {
         shortDistance = new BooleanLogEntry(log, "/hood/isOpen");
     }
 
-    public void shallPass(){
+    public void bigAngle(){
         angleChanger.set(true);
     }
 
-    public void shallNotPass(){
+    public void smallAngle(){
         angleChanger.set(false);
+    }
+
+    public void changeAngleForDistance(){
+        if (Constants.Hood.DISTANCE_FROM_TARGET < Constants.Hood.DISTANCE_FOR_ANGLE){
+            smallAngle();
+        }
+        bigAngle();
     }
 }
