@@ -1,5 +1,6 @@
 package frc.robot.subsystems.shooter;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -17,8 +18,6 @@ import static frc.robot.Constants.SHOOTER.INVERSION_TYPE;
 import static frc.robot.Constants.SHOOTER.TICKS_PER_REVOLUTION;
 
 import static frc.robot.Ports.Shooter.*;
-
-
 
 
 public class Shooter extends SubsystemBase {
@@ -48,6 +47,10 @@ public class Shooter extends SubsystemBase {
 
     public void setPower(double power) {
         mainMotor.set(power);
+    }
+
+    public void setVelocity(double velocity) {
+mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
     }
 
     public double getPower() {

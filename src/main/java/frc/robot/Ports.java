@@ -3,6 +3,10 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 public class Ports {
+    public static class Controls{
+public static final int XBOX = 0;
+    }
+
     public static class Hood {
         public static final int SOLENOID = 0;
     }
