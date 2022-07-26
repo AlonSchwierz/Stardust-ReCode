@@ -56,8 +56,8 @@ public class PipeLine extends CommandBase {
                 shooter.setVelocity(shooter.returnSpeedForDistance());
                 break;
             case REVERSE_PIPELINE:
-                conveyor.setPower(0.5);
-                intake.setPower(0.5);
+                conveyor.setPower(-0.5);
+                intake.setPower(-0.5);
                 break;
             default:
                 throw new IllegalStateException("Unknown State " + state.name());
