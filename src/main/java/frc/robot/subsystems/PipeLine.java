@@ -29,47 +29,36 @@ public class PipeLine extends CommandBase {
         switch (pipelineState.get()) {
 
             case Idle:
-                intake.closeREEEtractor();
+                intake.setPower(0);
+                conveyor.setPower(0);
+                shooter.setPower(0);
+                break;
+
+            case WARMUP:
                 intake.setPower(0);
                 conveyor.setPower(0);
                 flap.ShallNotPass();
+                hood.changeAngleForDistance();
+                shooter.setVelocity(shooter.returnSpeedForDistance());
+                break;
+            case FEED_AND_CONVEY:
                 shooter.setPower(0);
-                hood.changeAngleForDistance();
-                break;
-
-            case feed:
                 intake.openREEEtractor();
-                intake.setPower(8);
+                flap.ShallNotPass();
+                intake.setPower(0.5);
+                conveyor.setPower(0.5);
                 break;
-
-            case shoot:
+            case CONVEY_AND_SHOOT:
+                intake.setPower(0);
                 flap.ShallPass();
+                hood.changeAngleForDistance();
+                conveyor.setPower(0.5);
                 shooter.setVelocity(shooter.returnSpeedForDistance());
                 break;
-
-            case convey:
-                flap.ShallPass();
-                conveyor.setPower(8);
+            case REVERSE_PIPELINE:
+                conveyor.setPower(0.5);
+                intake.setPower(0.5);
                 break;
-
-            case warmup:
-                shooter.setVelocity(shooter.returnSpeedForDistance());
-                break;
-            case feedAndConvey:
-                intake.openREEEtractor();
-                intake.setPower(8);
-                conveyor.setPower(8);
-                break;
-
-            case conveyAndShoot:
-                flap.ShallPass();
-                conveyor.setPower(8);
-                shooter.setPower(8);
-                hood.changeAngleForDistance();
-                break;
-            case reversePipeline:
-                conveyor.setPower(-8);
-                intake.setPower(-8);
             default:
                 throw new IllegalStateException("Unknown State " + state.name());
         }
@@ -84,7 +73,7 @@ public class PipeLine extends CommandBase {
     }
 
     public enum Cases {
-        feed, convey, shoot, feedAndConvey, conveyAndShoot, Idle, reversePipeline, warmup
+        FEED_AND_CONVEY, CONVEY_AND_SHOOT, Idle, REVERSE_PIPELINE, WARMUP
 
     }
 }

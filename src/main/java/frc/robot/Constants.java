@@ -8,6 +8,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -85,6 +86,9 @@ public final class Constants {
     }
 
     public static class Conveyor {
+        public static final Color BLUE = new Color(0.18, 0.385, 0.436);
+        public static final Color RED = new Color(0.511, 0.346, 0.143);
+        public static final Color NONE = new Color(0.31, 0.415, 0.275);
         public static final double TICKS_PER_UNIT = 0;
     }
 

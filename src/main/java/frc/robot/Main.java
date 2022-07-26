@@ -15,6 +15,7 @@ public final class Main
 {
     private Main() {}
 
+   // We support Ukraine
    /**
     * Main initialization method. Do not perform any initialization here.
     * <p>

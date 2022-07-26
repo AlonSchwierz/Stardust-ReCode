@@ -15,8 +15,6 @@ import frc.robot.subsystems.PipeLine;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
-import java.util.function.Supplier;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -53,21 +51,19 @@ public class RobotContainer {
 
     private PipeLine.Cases getPipelineState() {
         if (a.get()) {
-            return PipeLine.Cases.feedAndConvey;
+            return PipeLine.Cases.FEED_AND_CONVEY;
         }
         if (b.get()) {
             if (shooter.getVelocity() == shooter.returnSpeedForDistance()) {
-                return PipeLine.Cases.conveyAndShoot;
+                return PipeLine.Cases.CONVEY_AND_SHOOT;
             }
-            return PipeLine.Cases.warmup;
+            return PipeLine.Cases.WARMUP;
         }
 
         if (x.get()) {
-            return PipeLine.Cases.reversePipeline;
+            return PipeLine.Cases.REVERSE_PIPELINE;
         }
-        if (y.get()){
 
-        }
         return PipeLine.Cases.Idle;
     }
 
