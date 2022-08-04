@@ -116,4 +116,11 @@ public class Helicopter extends SubsystemBase {
         mainMotor.stopMotor();
     }
 
+    @Override
+    public void periodic() {
+        power.append(mainMotor.get());
+        voltage.append(mainMotor.getMotorOutputVoltage());
+    }
+
+
 }
