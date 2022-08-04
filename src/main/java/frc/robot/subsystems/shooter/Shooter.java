@@ -58,6 +58,7 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
     }
 
     public double getVelocity() {
+        System.out.println(unitModel.toTicks100ms(mainMotor.getSelectedSensorVelocity()));
         return unitModel.toTicks100ms(mainMotor.getSelectedSensorVelocity());
     }
 

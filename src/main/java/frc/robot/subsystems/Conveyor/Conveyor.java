@@ -60,10 +60,12 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean IsCargoInFrontOfPre() {
+        System.out.println(preFlapBeam.get());
         return preFlapBeam.get();
     }
 
     public boolean IsCargoInFrontOfPost() {
+        System.out.println(postFlapBeam.get());
         return postFlapBeam.get();
     }
 
