@@ -43,7 +43,6 @@ public class RobotContainer {
     }
 
 
-
     private void configureButtonBindings() {
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
     }
@@ -54,17 +53,21 @@ public class RobotContainer {
             return PipeLine.Cases.FEED_AND_CONVEY;
         }
         if (b.get()) {
-            if (shooter.getVelocity() == shooter.returnSpeedForDistance()) {
+            if (shooter.returnSpeedForDistance() - shooter.getVelocity() < 50) {
                 return PipeLine.Cases.CONVEY_AND_SHOOT;
+            } else {
+                return PipeLine.Cases.WARMUP;
             }
-            return PipeLine.Cases.WARMUP;
+
         }
 
         if (x.get()) {
             return PipeLine.Cases.REVERSE_PIPELINE;
         }
+        else{
+            return PipeLine.Cases.Idle;
+        }
 
-        return PipeLine.Cases.Idle;
     }
 
     /**

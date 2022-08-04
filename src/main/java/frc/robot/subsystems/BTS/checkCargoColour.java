@@ -10,11 +10,14 @@ import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
 public class checkCargoColour extends ParallelCommandGroup {
-    public checkCargoColour(frc.robot.subsystems.conveyor.ColorSensor colorSensor, Conveyor conveyor){
+    public checkCargoColour(frc.robot.subsystems.Conveyor.ColorSensor colorSensor, Conveyor conveyor){
+        addRequirements(conveyor);
 addCommands(
-        new InstantCommand(() -> conveyor.IsCargoInFrontOfPost()),
-        new InstantCommand(() -> conveyor.IsCargoInFrontOfPre()),
-        new InstantCommand(() -> colorSensor.getColor())
+
+
+        new RunCommand(() -> conveyor.IsCargoInFrontOfPost()),
+        new RunCommand(() -> conveyor.IsCargoInFrontOfPre()),
+        new RunCommand(() -> colorSensor.getColor())
 );
     }
 

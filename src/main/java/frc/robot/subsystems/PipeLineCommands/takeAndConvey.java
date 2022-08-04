@@ -7,6 +7,7 @@ import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
+
 public class takeAndConvey extends CommandBase {
     @Override
     public void initialize() {
@@ -24,7 +25,6 @@ public class takeAndConvey extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        Flap.ShallPass();
         Intake.getInstance().setPower(0);
         Conveyor.getInstance().setPower(0);
     }

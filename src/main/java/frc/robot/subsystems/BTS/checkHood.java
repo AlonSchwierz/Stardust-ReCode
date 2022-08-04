@@ -7,6 +7,7 @@ import frc.robot.subsystems.Hood.Hood;
 
 public class checkHood extends SequentialCommandGroup {
     public checkHood(Hood hood) {
+        addRequirements(hood);
         addCommands(
                 new InstantCommand(() -> hood.bigAngle()),
                 new WaitCommand(3),
@@ -18,8 +19,7 @@ public class checkHood extends SequentialCommandGroup {
                 new WaitCommand(3),
                 new InstantCommand(() -> hood.bigAngle()),
                 new WaitCommand(3),
-                new InstantCommand(() -> hood.smallAngle()),
-                new WaitCommand(3)
+                new InstantCommand(() -> hood.smallAngle())
         );
 
     }

@@ -29,13 +29,13 @@ public class Conveyor extends SubsystemBase {
 
     private final Deque<DriverStation.Alliance> cargoPositions = new ArrayDeque<>();
 
-    private static final DigitalInput postFlapBeam = new DigitalInput(Ports.Conveyor.postFlapBeam);
+    private static final BeamBreaker postFlapBeam = new BeamBreaker(Ports.Conveyor.postFlapBeam);
 
-    private static final DigitalInput preFlapBeam = new DigitalInput(Ports.Conveyor.preFlapBeam);
+    private static final BeamBreaker preFlapBeam = new BeamBreaker(Ports.Conveyor.preFlapBeam);
 
     private final UnitModel unitModel = new UnitModel(Constants.Conveyor.TICKS_PER_UNIT);
 
-    private final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kMXP);
+    private final ColorSensor colorSensor = new ColorSensor(I2C.Port.kMXP);
 
     public static Conveyor getInstance() {
         if (INSTANCE == null) {
@@ -67,7 +67,13 @@ public class Conveyor extends SubsystemBase {
     public boolean IsCargoInFrontOfPost() {
         System.out.println(postFlapBeam.get());
         return postFlapBeam.get();
+
     }
 
-
+    @Override
+    public void periodic() {
+        postFlapBeam.updateBeamBreaker();
+        preFlapBeam.updateBeamBreaker();
+        colorSensor.updateColorSensor();
+    }
 }

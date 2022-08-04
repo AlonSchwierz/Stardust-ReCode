@@ -1,4 +1,4 @@
-package frc.robot.subsystems.conveyor;
+package frc.robot.subsystems.Conveyor;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -37,10 +37,13 @@ public class ColorSensor {
         Color resultColor = result.color;
 
         if (resultColor == RED) {
+            System.out.println("RED");
             return DriverStation.Alliance.Red;
         } else if (resultColor == BLUE) {
+            System.out.println("BLUE");
             return DriverStation.Alliance.Blue;
         } else {
+            System.out.println("INVALID");
             return DriverStation.Alliance.Invalid;
         }
     }

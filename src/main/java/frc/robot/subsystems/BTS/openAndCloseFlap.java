@@ -8,6 +8,7 @@ import frc.robot.subsystems.Flap.Flap;
 
 public class openAndCloseFlap extends SequentialCommandGroup {
     public openAndCloseFlap(Flap flap) {
+        addRequirements(flap);
         addCommands(
                 new InstantCommand(() -> flap.ShallPass()),
                 new WaitCommand(3),

@@ -1,14 +1,17 @@
 package frc.robot.subsystems.BTS;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class checkShooterVelocity extends ParallelCommandGroup {
+public class checkShooterVelocity extends SequentialCommandGroup {
+
     public checkShooterVelocity(Shooter shooter) {
+        addRequirements(shooter);
         addCommands(
-                new InstantCommand(() -> shooter.setVelocity(1000)),
-                new InstantCommand(() -> shooter.getVelocity())
+                new RunCommand(() -> shooter.setVelocity(1000)),
+                new RunCommand(() -> shooter.getVelocity()),
+                new WaitCommand(5),
+                new InstantCommand(()-> shooter.setPower(0))
         );
 
     }

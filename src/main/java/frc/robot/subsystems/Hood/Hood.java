@@ -38,6 +38,9 @@ public class Hood extends SubsystemBase {
         if (Constants.Hood.DISTANCE_FROM_TARGET < Constants.Hood.DISTANCE_FOR_ANGLE){
             smallAngle();
         }
-        bigAngle();
+        else{
+            bigAngle();
+        }
+
     }
 }
