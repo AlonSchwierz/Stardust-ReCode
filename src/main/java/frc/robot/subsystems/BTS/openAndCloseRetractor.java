@@ -10,7 +10,7 @@ public class openAndCloseRetractor extends SequentialCommandGroup {
     public openAndCloseRetractor(Intake intake) {
         addRequirements(intake);
         addCommands(
-                new RunCommand(()-> intake.setPower(0.5)),
+                new RunCommand(()-> intake.setPower(0.5)).withTimeout(8),
                 new InstantCommand(()-> intake.openREEEtractor()),
                 new WaitCommand(1),
                 new InstantCommand(()-> intake.closeREEEtractor()),

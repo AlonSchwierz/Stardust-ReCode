@@ -53,7 +53,7 @@ public class RobotContainer {
             return PipeLine.Cases.FEED_AND_CONVEY;
         }
         if (b.get()) {
-            if (shooter.returnSpeedForDistance() - shooter.getVelocity() < 50) {
+            if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50) {
                 return PipeLine.Cases.CONVEY_AND_SHOOT;
             } else {
                 return PipeLine.Cases.WARMUP;

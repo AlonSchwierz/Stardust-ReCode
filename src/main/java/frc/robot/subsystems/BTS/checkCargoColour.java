@@ -9,7 +9,6 @@ public class checkCargoColour extends ParallelCommandGroup {
         addRequirements(conveyor);
 addCommands(
 
-
         new RunCommand(() -> conveyor.IsCargoInFrontOfPost()),
         new RunCommand(() -> conveyor.IsCargoInFrontOfPre()),
         new RunCommand(() -> colorSensor.getColor())
