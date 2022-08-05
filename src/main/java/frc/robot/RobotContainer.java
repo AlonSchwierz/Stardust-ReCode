@@ -8,6 +8,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.BDS.*;
+import frc.robot.subsystems.Conveyor.ColorSensor;
 import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.Hood.Hood;
@@ -63,8 +65,7 @@ public class RobotContainer {
 
         if (x.get()) {
             return PipeLine.Cases.REVERSE_PIPELINE;
-        }
-        else{
+        } else {
             return PipeLine.Cases.Idle;
         }
 
@@ -76,7 +77,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
         return null;
     }
 }

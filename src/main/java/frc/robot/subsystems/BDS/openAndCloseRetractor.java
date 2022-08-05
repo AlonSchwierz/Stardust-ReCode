@@ -1,4 +1,4 @@
-package frc.robot.subsystems.BTS;
+package frc.robot.subsystems.BDS;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -10,7 +10,7 @@ public class openAndCloseRetractor extends SequentialCommandGroup {
     public openAndCloseRetractor(Intake intake) {
         addRequirements(intake);
         addCommands(
-                new RunCommand(()-> intake.setPower(0.5)).withTimeout(8),
+                new RunCommand(()-> intake.setPower(0.5)).withTimeout(2),
                 new InstantCommand(()-> intake.openREEEtractor()),
                 new WaitCommand(1),
                 new InstantCommand(()-> intake.closeREEEtractor()),

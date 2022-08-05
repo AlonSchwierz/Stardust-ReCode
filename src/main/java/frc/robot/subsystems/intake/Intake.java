@@ -17,7 +17,6 @@ public class Intake extends SubsystemBase {
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Intake.MOTOR);
     private static final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM ,Ports.Intake.Solenoid);
 
-//    private final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Intake.SOLENOID);
 
     private Intake() {
         motor.setInverted(Ports.Intake.isMotorInverted);

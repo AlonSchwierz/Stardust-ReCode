@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.UnitModel;
 import com.revrobotics.ColorSensorV3;
 
 
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -69,6 +71,11 @@ public class Conveyor extends SubsystemBase {
         return postFlapBeam.get();
 
     }
+    public String getColor(){
+        return String.valueOf(colorSensor.getColor());
+    }
+
+
 
     @Override
     public void periodic() {

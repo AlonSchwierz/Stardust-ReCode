@@ -11,12 +11,11 @@ import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Ports;
 import frc.robot.subsystems.UnitModel;
 
 
-import static frc.robot.Constants.SHOOTER.INVERSION_TYPE;
-import static frc.robot.Constants.SHOOTER.TICKS_PER_REVOLUTION;
-
+import static frc.robot.Constants.SHOOTER.*;
 import static frc.robot.Ports.Shooter.*;
 
 
@@ -50,7 +49,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setVelocity(double velocity) {
-mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
+mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity) / 60.0);
     }
 
     public double getPower() {
@@ -74,8 +73,8 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
 
     private void configureMotor() {
         mainMotor.configFactoryDefault();
-        mainMotor.configAllSettings(Constants.SHOOTER.getConfiguration());
-        mainMotor.setInverted(INVERSION_TYPE);
+        mainMotor.configAllSettings(getConfiguration());
+        mainMotor.setInverted(Ports.Shooter.INVERSION_TYPE);
         mainMotor.setNeutralMode(NeutralMode.Coast);
 
         var currentLimit = new SupplyCurrentLimitConfiguration(true, 45, 5, 0.1);
@@ -86,12 +85,24 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity));
 
         auxMotor.configFactoryDefault();
         auxMotor.follow(mainMotor);
-        auxMotor.configAllSettings(Constants.SHOOTER.getConfiguration());
+        auxMotor.configAllSettings(getConfiguration());
         auxMotor.configSupplyCurrentLimit(currentLimit);
         auxMotor.setNeutralMode(NeutralMode.Coast);
         auxMotor.setInverted(TalonFXInvertType.Clockwise);
         auxMotor.configVoltageCompSaturation(Constants.NOMINAL_VOLTAGE);
         auxMotor.enableVoltageCompensation(true);
         auxMotor.config_IntegralZone(0, 0);
+    }
+
+    @Override
+    public void periodic() {
+//        FireLog.log("Shooter-velocity", getVelocity());
+//        System.out.println("Shooter'd velocity: " + mainMotor.getSelectedSensorVelocity());
+
+       mainMotor.config_kP(0, Constants.SHOOTER.kP);
+        mainMotor.config_kI(0, Constants.SHOOTER.kI);
+        mainMotor.config_kD(0, Constants.SHOOTER.kD);
+        mainMotor.config_kF(0, Constants.SHOOTER.kF);
+
     }
 }

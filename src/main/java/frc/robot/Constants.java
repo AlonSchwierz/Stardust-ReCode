@@ -8,6 +8,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.util.Color;
 
 /**
@@ -29,6 +30,7 @@ public final class Constants {
 
     public static final boolean ENABLE_VOLTAGE_COMPENSATION = true;
     public static final boolean ENABLE_CURRENT_LIMIT = true;
+
 
     public static class Helicopter {
         public static final double KP = 0.068;
@@ -73,6 +75,10 @@ public final class Constants {
     }
 
     public static class SHOOTER {
+        public static final double kP =  0.08;
+        public static final double kI =  0;
+        public static final double kD =  9;
+        public static final double kF =  0.048;
         public static final double SpeedForDistance = 0;
         public static final double TICKS_PER_REVOLUTION = 2048;
         public static final TalonFXInvertType INVERSION_TYPE = TalonFXInvertType.CounterClockwise;
@@ -98,4 +104,11 @@ public final class Constants {
 
 
     }
+    public static class intake{
+        public static final int MOTOR = 11;
+        public static final int SOLENOID = 1;
+
+        public static final boolean IS_MOTOR_INVERTED = true;
+    }
+
 }
