@@ -106,7 +106,7 @@ public class Helicopter extends SubsystemBase {
         return new Rotation2d(Math.IEEEremainder(unitModelPosition.toUnits(mainMotor.getSelectedSensorPosition(0)), Math.PI * 2));
     }
 
-    public void setposition(Rotation2d position) {
+    public void setPosition(Rotation2d position) {
         var currentPosition = getPosition();
         var error = position.minus(currentPosition);
         Rotation2d minMove = new Rotation2d(Math.IEEEremainder(unitModelPosition.toTicks(error.getRadians()), Math.PI * 2));

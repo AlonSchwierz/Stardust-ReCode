@@ -54,6 +54,9 @@ public class Robot extends TimedRobot
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
+
+
+        //checkConveyorSensors
         CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("postFlap" , Conveyor.getInstance().IsCargoInFrontOfPre());
         SmartDashboard.putBoolean("preFlap" , Conveyor.getInstance().IsCargoInFrontOfPre());
