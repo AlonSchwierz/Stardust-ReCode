@@ -8,17 +8,22 @@ public class State {
         warmUp,
         reversePipeLine
     }
+
+    stateName thisStateName;
     stateName nextAvliableState1;
     stateName nextAvliableState2;
     stateName nextAvliableState3;
     stateName nextAvliableState4;
 
 
-    public State(stateName nextAvliableState1, stateName nextAvliableState2, stateName nextAvliableState3, stateName nextAvliableState4) {
+    public State(stateName thisStateName ,stateName nextAvliableState1, stateName nextAvliableState2, stateName nextAvliableState3, stateName nextAvliableState4) {
+        this.thisStateName = thisStateName;
         this.nextAvliableState1 = nextAvliableState1;
         this.nextAvliableState2 = nextAvliableState2;
         this.nextAvliableState3 = nextAvliableState3;
         this.nextAvliableState4 = nextAvliableState4;
 
     }
+
+
 }
