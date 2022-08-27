@@ -57,6 +57,42 @@ public class Superstructure extends SubsystemBase {
         hood.changeAngleForDistance();
         shooter.setVelocity(shooter.returnSpeedForDistance());
     }
+
+    public static class State {
+
+        enum stateName{
+            idle,
+            feedAndConvey,
+            conveyAndShoot,
+            warmUp,
+            reversePipeLine
+        }
+
+        stateName thisStateName;
+        stateName nextAvliableState1;
+        stateName nextAvliableState2;
+        stateName nextAvliableState3;
+        stateName nextAvliableState4;
+
+
+        public State(stateName thisStateName , stateName nextAvliableState1, stateName nextAvliableState2, stateName nextAvliableState3, stateName nextAvliableState4) {
+            this.thisStateName = thisStateName;
+            this.nextAvliableState1 = nextAvliableState1;
+            this.nextAvliableState2 = nextAvliableState2;
+            this.nextAvliableState3 = nextAvliableState3;
+            this.nextAvliableState4 = nextAvliableState4;
+
+        }
+    public boolean isStateAveliable (stateName wantedState){
+            if(wantedState == this.nextAvliableState1 || wantedState == this.nextAvliableState2 || wantedState == this.nextAvliableState3 || wantedState == this.nextAvliableState4){
+                return true;
+            }
+            else {
+                return false;
+            }
+    }
+
+    }
 }
 
 

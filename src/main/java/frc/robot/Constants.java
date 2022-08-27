@@ -110,5 +110,14 @@ public final class Constants {
 
         public static final boolean IS_MOTOR_INVERTED = true;
     }
+    public static class State{
+        enum stateName{
+            idle,
+            feedAndConvey,
+            conveyAndShoot,
+            warmUp,
+            reversePipeLine
+        }
+    }
 
 }

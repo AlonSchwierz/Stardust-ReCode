@@ -8,8 +8,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.BDS.*;
-import frc.robot.subsystems.Conveyor.ColorSensor;
 import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.Hood.Hood;
@@ -49,7 +47,12 @@ public class RobotContainer {
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
     }
 
-
+    /**
+     * a - feedAndConvey
+     * b - warmUp
+     * x - conveyAndShoot
+     * y - reversePipeLine
+     */
     private PipeLine.Cases getPipelineState() {
         if (a.get()) {
             return PipeLine.Cases.FEED_AND_CONVEY;
