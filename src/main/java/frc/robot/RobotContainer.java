@@ -12,6 +12,7 @@ import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.PipeLine;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
@@ -36,6 +37,13 @@ public class RobotContainer {
     private final JoystickButton x = new JoystickButton(xbox, XboxController.Button.kX.value);
     private final JoystickButton y = new JoystickButton(xbox, XboxController.Button.kY.value);
     private final JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
+    public Superstructure.State currentState = new Superstructure.State(null, null, null, null, null);
+    public Superstructure.State idle = new Superstructure.State(Superstructure.State.stateName.idle, Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.warmUp, Superstructure.State.stateName.reversePipeLine, null);
+    public Superstructure.State feedAndConvey = new Superstructure.State(Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, null, null);
+    public Superstructure.State warmUp = new Superstructure.State(Superstructure.State.stateName.warmUp, Superstructure.State.stateName.idle, Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.reversePipeLine, Superstructure.State.stateName.conveyAndShoot);
+    public Superstructure.State conveyAndShoot = new Superstructure.State(Superstructure.State.stateName.conveyAndShoot, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, Superstructure.State.stateName.reversePipeLine, null);
+    public Superstructure.State reversePipeLine = new Superstructure.State(Superstructure.State.stateName.reversePipeLine, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, null, null);
+
 
     public RobotContainer() {
         // Configure the button bindings
@@ -54,21 +62,28 @@ public class RobotContainer {
      * y - reversePipeLine
      */
     private PipeLine.Cases getPipelineState() {
-        if (a.get()) {
+        if (a.get() && currentState.isStateAveliable(Superstructure.State.stateName.feedAndConvey)) {
+            currentState = feedAndConvey;
             return PipeLine.Cases.FEED_AND_CONVEY;
         }
-        if (b.get()) {
-            if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50) {
-                return PipeLine.Cases.CONVEY_AND_SHOOT;
-            } else {
-                return PipeLine.Cases.WARMUP;
-            }
+
+        if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50 && currentState.isStateAveliable(Superstructure.State.stateName.conveyAndShoot)) {
+            currentState = conveyAndShoot;
+            return PipeLine.Cases.CONVEY_AND_SHOOT;
+
+
 
         }
+        if (x.get() && currentState.isStateAveliable(Superstructure.State.stateName.warmUp)) {
+            currentState = warmUp;
+            return PipeLine.Cases.WARMUP;
+        }
 
-        if (x.get()) {
+        if (y.get() && currentState.isStateAveliable(Superstructure.State.stateName.reversePipeLine)) {
+            currentState = reversePipeLine;
             return PipeLine.Cases.REVERSE_PIPELINE;
         } else {
+            currentState = idle;
             return PipeLine.Cases.Idle;
         }
 
