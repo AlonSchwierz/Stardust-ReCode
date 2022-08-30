@@ -10,16 +10,16 @@ import frc.robot.subsystems.shooter.Shooter;
 import java.util.function.Supplier;
 
 public class PipeLine extends CommandBase {
-    private final Supplier<Cases> pipelineState;
+    private final Supplier<Superstructure.State.stateName> pipelineState;
     private final Intake intake = Intake.getInstance();
     private final Conveyor conveyor = Conveyor.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Flap flap = Flap.getInstance();
     private final Hood hood = Hood.getInstance();
 
-    private final Cases state = Cases.Idle;
+    private final Superstructure.State.stateName state = Superstructure.State.stateName.Idle;
 
-    public PipeLine(Supplier<Cases> pipelineState) {
+    public PipeLine(Supplier<Superstructure.State.stateName> pipelineState) {
         this.pipelineState = pipelineState;
         addRequirements(flap, conveyor, shooter, intake, hood);
     }
@@ -73,10 +73,7 @@ public class PipeLine extends CommandBase {
         shooter.setPower(0);
     }
 
-    public enum Cases {
-        FEED_AND_CONVEY, CONVEY_AND_SHOOT, Idle, REVERSE_PIPELINE, WARMUP
 
-    }
 }
 
 

@@ -13,11 +13,7 @@ public class Superstructure extends SubsystemBase {
     private final Shooter shooter = Shooter.getInstance();
     private final Flap flap = Flap.getInstance();
     private final Hood hood = Hood.getInstance();
-    State idle = new State(State.stateName.idle, State.stateName.feedAndConvey, State.stateName.warmUp, State.stateName.reversePipeLine, null);
-    State feedAndConvey = new State(State.stateName.feedAndConvey, State.stateName.idle, State.stateName.warmUp, null, null);
-    State warmUp = new State(State.stateName.warmUp, State.stateName.idle, State.stateName.feedAndConvey, State.stateName.reversePipeLine, State.stateName.conveyAndShoot);
-    State conveyAndShoot = new State(State.stateName.conveyAndShoot, State.stateName.idle, State.stateName.warmUp, State.stateName.reversePipeLine, null);
-    State reversePipeLine = new State(State.stateName.reversePipeLine, State.stateName.idle, State.stateName.warmUp, null, null);
+
 
 
     public void idle() {
@@ -60,9 +56,11 @@ public class Superstructure extends SubsystemBase {
 
     public static class State {
 
-        public enum stateName {
-            idle, feedAndConvey, conveyAndShoot, warmUp, reversePipeLine
-        }
+                    public enum stateName {
+                FEED_AND_CONVEY, CONVEY_AND_SHOOT, Idle, REVERSE_PIPELINE, WARMUP
+
+            }
+
 
         stateName thisStateName;
         stateName nextAvliableState1;

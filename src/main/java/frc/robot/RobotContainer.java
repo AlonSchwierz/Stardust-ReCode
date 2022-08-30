@@ -37,12 +37,12 @@ public class RobotContainer {
     private final JoystickButton x = new JoystickButton(xbox, XboxController.Button.kX.value);
     private final JoystickButton y = new JoystickButton(xbox, XboxController.Button.kY.value);
     private final JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
-    public Superstructure.State currentState = new Superstructure.State(null, null, null, null, null);
-    public Superstructure.State idle = new Superstructure.State(Superstructure.State.stateName.idle, Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.warmUp, Superstructure.State.stateName.reversePipeLine, null);
-    public Superstructure.State feedAndConvey = new Superstructure.State(Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, null, null);
-    public Superstructure.State warmUp = new Superstructure.State(Superstructure.State.stateName.warmUp, Superstructure.State.stateName.idle, Superstructure.State.stateName.feedAndConvey, Superstructure.State.stateName.reversePipeLine, Superstructure.State.stateName.conveyAndShoot);
-    public Superstructure.State conveyAndShoot = new Superstructure.State(Superstructure.State.stateName.conveyAndShoot, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, Superstructure.State.stateName.reversePipeLine, null);
-    public Superstructure.State reversePipeLine = new Superstructure.State(Superstructure.State.stateName.reversePipeLine, Superstructure.State.stateName.idle, Superstructure.State.stateName.warmUp, null, null);
+    private Superstructure.State currentState = new Superstructure.State(null, null, null, null, null);
+    private Superstructure.State idle = new Superstructure.State(Superstructure.State.stateName.Idle, Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.REVERSE_PIPELINE, null);
+    private Superstructure.State feedAndConvey = new Superstructure.State(Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, null, null);
+    private Superstructure.State warmUp = new Superstructure.State(Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.Idle, Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.REVERSE_PIPELINE, Superstructure.State.stateName.CONVEY_AND_SHOOT);
+    private Superstructure.State conveyAndShoot = new Superstructure.State(Superstructure.State.stateName.CONVEY_AND_SHOOT, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.REVERSE_PIPELINE, null);
+    private Superstructure.State reversePipeLine = new Superstructure.State(Superstructure.State.stateName.REVERSE_PIPELINE, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, null, null);
 
 
     public RobotContainer() {
@@ -61,30 +61,30 @@ public class RobotContainer {
      * x - conveyAndShoot
      * y - reversePipeLine
      */
-    private PipeLine.Cases getPipelineState() {
-        if (a.get() && currentState.isStateAveliable(Superstructure.State.stateName.feedAndConvey)) {
+    private Superstructure.State.stateName getPipelineState() {
+        if (a.get() && currentState.isStateAveliable(Superstructure.State.stateName.FEED_AND_CONVEY)) {
             currentState = feedAndConvey;
-            return PipeLine.Cases.FEED_AND_CONVEY;
+            return Superstructure.State.stateName.FEED_AND_CONVEY;
         }
 
-        if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50 && currentState.isStateAveliable(Superstructure.State.stateName.conveyAndShoot)) {
+        if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50 && currentState.isStateAveliable(Superstructure.State.stateName.CONVEY_AND_SHOOT)) {
             currentState = conveyAndShoot;
-            return PipeLine.Cases.CONVEY_AND_SHOOT;
+            return Superstructure.State.stateName.CONVEY_AND_SHOOT;
 
 
 
         }
-        if (x.get() && currentState.isStateAveliable(Superstructure.State.stateName.warmUp)) {
+        if (x.get() && currentState.isStateAveliable(Superstructure.State.stateName.WARMUP)) {
             currentState = warmUp;
-            return PipeLine.Cases.WARMUP;
+            return Superstructure.State.stateName.WARMUP;
         }
 
-        if (y.get() && currentState.isStateAveliable(Superstructure.State.stateName.reversePipeLine)) {
+        if (y.get() && currentState.isStateAveliable(Superstructure.State.stateName.REVERSE_PIPELINE)) {
             currentState = reversePipeLine;
-            return PipeLine.Cases.REVERSE_PIPELINE;
+            return Superstructure.State.stateName.REVERSE_PIPELINE;
         } else {
             currentState = idle;
-            return PipeLine.Cases.Idle;
+            return Superstructure.State.stateName.Idle;
         }
 
     }
