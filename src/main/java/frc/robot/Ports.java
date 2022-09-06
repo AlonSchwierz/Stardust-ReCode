@@ -3,8 +3,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 public class Ports {
-    public static class Controls{
-public static final int XBOX = 0;
+    public static class Controls {
+        public static final int XBOX = 0;
     }
 
     public static class Hood {
@@ -31,9 +31,9 @@ public static final int XBOX = 0;
         public static final boolean isMotorInverted = true;
 
     }
-    public static class Conveyor{
-        public  static  final int MOTOR = 21;
 
+    public static class Conveyor {
+        public static final int MOTOR = 21;
 
 
         public static final int preFlapBeam = 7;
@@ -47,7 +47,8 @@ public static final int XBOX = 0;
 
 
     }
-    public static class Shooter{
+
+    public static class Shooter {
         public static final int MAIN_MOTOR = 31;
         public static final int AUX_MOTOR = 32;
         public static final TalonFXInvertType INVERSION_TYPE = TalonFXInvertType.CounterClockwise;
@@ -55,7 +56,7 @@ public static final int XBOX = 0;
 
     }
 
-    public static class Flap{
+    public static class Flap {
         public static final int SOLENOID = 7;
     }
 }

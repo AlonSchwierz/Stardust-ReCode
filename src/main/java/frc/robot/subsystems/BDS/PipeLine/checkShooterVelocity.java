@@ -1,6 +1,7 @@
 package frc.robot.subsystems.BDS.PipeLine;
 
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class checkShooterVelocity extends ParallelCommandGroup {

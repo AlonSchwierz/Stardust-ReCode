@@ -10,16 +10,16 @@ import frc.robot.subsystems.shooter.Shooter;
 import java.util.function.Supplier;
 
 public class PipeLine extends CommandBase {
-    private final Supplier<Superstructure.State.stateName> pipelineState;
+    private final Supplier<Superstructure.State.StateName> pipelineState;
     private final Intake intake = Intake.getInstance();
     private final Conveyor conveyor = Conveyor.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Flap flap = Flap.getInstance();
     private final Hood hood = Hood.getInstance();
 
-    private final Superstructure.State.stateName state = Superstructure.State.stateName.Idle;
+    private final Superstructure.State.StateName state = Superstructure.State.StateName.Idle;
 
-    public PipeLine(Supplier<Superstructure.State.stateName> pipelineState) {
+    public PipeLine(Supplier<Superstructure.State.StateName> pipelineState) {
         this.pipelineState = pipelineState;
         addRequirements(flap, conveyor, shooter, intake, hood);
     }

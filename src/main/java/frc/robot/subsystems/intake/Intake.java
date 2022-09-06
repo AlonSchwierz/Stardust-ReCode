@@ -2,8 +2,6 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.util.datalog.BooleanLogEntry;
-import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,10 +10,9 @@ import frc.robot.Ports;
 
 public class Intake extends SubsystemBase {
 
-    private static Intake INSTANCE;
-
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Intake.MOTOR);
-    private static final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM ,Ports.Intake.Solenoid);
+    private static final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Intake.Solenoid);
+    private static Intake INSTANCE;
 
 
     private Intake() {
@@ -46,11 +43,11 @@ public class Intake extends SubsystemBase {
         motor.set(power);
     }
 
-    public void openREEEtractor(){
-      retractor.set(true);
+    public void openREEEtractor() {
+        retractor.set(true);
     }
 
-    public void closeREEEtractor(){
+    public void closeREEEtractor() {
         retractor.set(false);
     }
 

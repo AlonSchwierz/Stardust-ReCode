@@ -5,18 +5,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.util.datalog.DataLog;
-import edu.wpi.first.util.datalog.DataLogEntry;
-import edu.wpi.first.util.datalog.DoubleLogEntry;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.subsystems.UnitModel;
 
-
-import static frc.robot.Constants.SHOOTER.*;
-import static frc.robot.Ports.Shooter.*;
+import static frc.robot.Constants.SHOOTER.TICKS_PER_REVOLUTION;
+import static frc.robot.Constants.SHOOTER.getConfiguration;
+import static frc.robot.Ports.Shooter.AUX_MOTOR;
+import static frc.robot.Ports.Shooter.MAIN_MOTOR;
 
 
 public class Shooter extends SubsystemBase {
@@ -24,8 +21,10 @@ public class Shooter extends SubsystemBase {
     private final UnitModel unitModel = new UnitModel(TICKS_PER_REVOLUTION);
     private final WPI_TalonFX mainMotor = new WPI_TalonFX(MAIN_MOTOR);
     private final WPI_TalonFX auxMotor = new WPI_TalonFX(AUX_MOTOR);
-    private final DataLogEntry shooterVelocity;
-    private final DataLogEntry shooterVoltage;
+
+    private Shooter() {
+        configureMotor();
+    }
 
     public static Shooter getInstance() {
         if (INSTANCE == null) {
@@ -35,25 +34,12 @@ public class Shooter extends SubsystemBase {
         return INSTANCE;
     }
 
-    private Shooter() {
-        configureMotor();
-
-        DataLog log = DataLogManager.getLog();
-        shooterVelocity = new DoubleLogEntry(log, "/shooter/velocity");
-        shooterVoltage = new DoubleLogEntry(log, "/shooter/voltage");
-
+    public double getPower() {
+        return mainMotor.get();
     }
 
     public void setPower(double power) {
         mainMotor.set(power);
-    }
-
-    public void setVelocity(double velocity) {
-mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity) / 60.0);
-    }
-
-    public double getPower() {
-        return mainMotor.get();
     }
 
     public double getVelocity() {
@@ -61,6 +47,9 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity) / 60.0);
         return unitModel.toVelocity(mainMotor.getSelectedSensorVelocity());
     }
 
+    public void setVelocity(double velocity) {
+        mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity) / 60.0);
+    }
 
     public double returnSpeedForDistance() {
         double SpeedForDistance = Constants.SHOOTER.SpeedForDistance;
@@ -99,10 +88,9 @@ mainMotor.set(ControlMode.Velocity, unitModel.toTicks100ms(velocity) / 60.0);
 //        FireLog.log("Shooter-velocity", getVelocity());
 //        System.out.println("Shooter'd velocity: " + mainMotor.getSelectedSensorVelocity());
 
-       mainMotor.config_kP(0, Constants.SHOOTER.kP);
+        mainMotor.config_kP(0, Constants.SHOOTER.kP);
         mainMotor.config_kI(0, Constants.SHOOTER.kI);
         mainMotor.config_kD(0, Constants.SHOOTER.kD);
         mainMotor.config_kF(0, Constants.SHOOTER.kF);
-
     }
 }

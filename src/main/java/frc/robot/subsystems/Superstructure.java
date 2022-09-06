@@ -15,7 +15,6 @@ public class Superstructure extends SubsystemBase {
     private final Hood hood = Hood.getInstance();
 
 
-
     public void idle() {
         intake.setPower(0);
         conveyor.setPower(0);
@@ -56,20 +55,12 @@ public class Superstructure extends SubsystemBase {
 
     public static class State {
 
-                    public enum stateName {
-                FEED_AND_CONVEY, CONVEY_AND_SHOOT, Idle, REVERSE_PIPELINE, WARMUP
-
-            }
-
-
-        stateName thisStateName;
-        stateName nextAvliableState1;
-        stateName nextAvliableState2;
-        stateName nextAvliableState3;
-        stateName nextAvliableState4;
-
-
-        public State(stateName thisStateName, stateName nextAvliableState1, stateName nextAvliableState2, stateName nextAvliableState3, stateName nextAvliableState4) {
+        StateName thisStateName;
+        StateName nextAvliableState1;
+        StateName nextAvliableState2;
+        StateName nextAvliableState3;
+        StateName nextAvliableState4;
+        public State(StateName thisStateName, StateName nextAvliableState1, StateName nextAvliableState2, StateName nextAvliableState3, StateName nextAvliableState4) {
             this.thisStateName = thisStateName;
             this.nextAvliableState1 = nextAvliableState1;
             this.nextAvliableState2 = nextAvliableState2;
@@ -78,12 +69,13 @@ public class Superstructure extends SubsystemBase {
 
         }
 
-        public boolean isStateAveliable(stateName wantedState) {
-            if (wantedState == this.nextAvliableState1 || wantedState == this.nextAvliableState2 || wantedState == this.nextAvliableState3 || wantedState == this.nextAvliableState4) {
-                return true;
-            } else {
-                return false;
-            }
+        public boolean isStateAveliable(StateName wantedState) {
+            return wantedState == this.nextAvliableState1 || wantedState == this.nextAvliableState2 || wantedState == this.nextAvliableState3 || wantedState == this.nextAvliableState4;
+        }
+
+        public enum StateName {
+            FEED_AND_CONVEY, CONVEY_AND_SHOOT, Idle, REVERSE_PIPELINE, WARMUP
+
         }
 
     }

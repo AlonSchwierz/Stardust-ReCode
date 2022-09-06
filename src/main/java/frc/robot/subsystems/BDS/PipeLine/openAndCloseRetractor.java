@@ -10,21 +10,21 @@ public class openAndCloseRetractor extends SequentialCommandGroup {
     public openAndCloseRetractor(Intake intake) {
         addRequirements(intake);
         addCommands(
-                new RunCommand(()-> intake.setPower(0.5)).withTimeout(2),
-                new InstantCommand(()-> intake.openREEEtractor()),
+                new RunCommand(() -> intake.setPower(0.5)).withTimeout(2),
+                new InstantCommand(() -> intake.openREEEtractor()),
                 new WaitCommand(1),
-                new InstantCommand(()-> intake.closeREEEtractor()),
+                new InstantCommand(() -> intake.closeREEEtractor()),
                 new WaitCommand(1),
-                new InstantCommand(()-> intake.openREEEtractor()),
+                new InstantCommand(() -> intake.openREEEtractor()),
                 new WaitCommand(1),
-                new InstantCommand(()-> intake.closeREEEtractor()),
+                new InstantCommand(() -> intake.closeREEEtractor()),
                 new WaitCommand(1),
-                new InstantCommand(()-> intake.openREEEtractor()),
+                new InstantCommand(() -> intake.openREEEtractor()),
                 new WaitCommand(1),
-                new InstantCommand(()-> intake.closeREEEtractor()),
-                new InstantCommand(()-> intake.setPower(0))
+                new InstantCommand(() -> intake.closeREEEtractor()),
+                new InstantCommand(() -> intake.setPower(0))
 
-                );
+        );
 
     }
 }

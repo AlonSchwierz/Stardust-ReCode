@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.Flap.Flap;
 import frc.robot.subsystems.Hood.Hood;
-import frc.robot.subsystems.PipeLine;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
@@ -24,7 +23,7 @@ import frc.robot.subsystems.shooter.Shooter;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+    private static RobotContainer INSTANCE = null;
     private final Intake intake = Intake.getInstance();
     private final Conveyor conveyor = Conveyor.getInstance();
     private final Shooter shooter = Shooter.getInstance();
@@ -38,18 +37,23 @@ public class RobotContainer {
     private final JoystickButton y = new JoystickButton(xbox, XboxController.Button.kY.value);
     private final JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
     private Superstructure.State currentState = new Superstructure.State(null, null, null, null, null);
-    private Superstructure.State idle = new Superstructure.State(Superstructure.State.stateName.Idle, Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.REVERSE_PIPELINE, null);
-    private Superstructure.State feedAndConvey = new Superstructure.State(Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, null, null);
-    private Superstructure.State warmUp = new Superstructure.State(Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.Idle, Superstructure.State.stateName.FEED_AND_CONVEY, Superstructure.State.stateName.REVERSE_PIPELINE, Superstructure.State.stateName.CONVEY_AND_SHOOT);
-    private Superstructure.State conveyAndShoot = new Superstructure.State(Superstructure.State.stateName.CONVEY_AND_SHOOT, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, Superstructure.State.stateName.REVERSE_PIPELINE, null);
-    private Superstructure.State reversePipeLine = new Superstructure.State(Superstructure.State.stateName.REVERSE_PIPELINE, Superstructure.State.stateName.Idle, Superstructure.State.stateName.WARMUP, null, null);
+    private final Superstructure.State idle = new Superstructure.State(Superstructure.State.StateName.Idle, Superstructure.State.StateName.FEED_AND_CONVEY, Superstructure.State.StateName.WARMUP, Superstructure.State.StateName.REVERSE_PIPELINE, null);
+    private final Superstructure.State feedAndConvey = new Superstructure.State(Superstructure.State.StateName.FEED_AND_CONVEY, Superstructure.State.StateName.Idle, Superstructure.State.StateName.WARMUP, null, null);
+    private final Superstructure.State warmUp = new Superstructure.State(Superstructure.State.StateName.WARMUP, Superstructure.State.StateName.Idle, Superstructure.State.StateName.FEED_AND_CONVEY, Superstructure.State.StateName.REVERSE_PIPELINE, Superstructure.State.StateName.CONVEY_AND_SHOOT);
+    private final Superstructure.State conveyAndShoot = new Superstructure.State(Superstructure.State.StateName.CONVEY_AND_SHOOT, Superstructure.State.StateName.Idle, Superstructure.State.StateName.WARMUP, Superstructure.State.StateName.REVERSE_PIPELINE, null);
+    private final Superstructure.State reversePipeLine = new Superstructure.State(Superstructure.State.StateName.REVERSE_PIPELINE, Superstructure.State.StateName.Idle, Superstructure.State.StateName.WARMUP, null, null);
 
-
-    public RobotContainer() {
+    private RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
     }
 
+    public static RobotContainer getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new RobotContainer();
+        }
+        return INSTANCE;
+    }
 
     private void configureButtonBindings() {
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
@@ -61,32 +65,38 @@ public class RobotContainer {
      * x - conveyAndShoot
      * y - reversePipeLine
      */
-    private Superstructure.State.stateName getPipelineState() {
-        if (a.get() && currentState.isStateAveliable(Superstructure.State.stateName.FEED_AND_CONVEY)) {
+
+    public Superstructure.State.StateName getPipelineState() {
+        if (a.get() && currentState.isStateAveliable(Superstructure.State.StateName.FEED_AND_CONVEY)) {
             currentState = feedAndConvey;
-            return Superstructure.State.stateName.FEED_AND_CONVEY;
+            return Superstructure.State.StateName.FEED_AND_CONVEY;
+
         }
 
-        if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50 && currentState.isStateAveliable(Superstructure.State.stateName.CONVEY_AND_SHOOT)) {
+        if (Math.abs(shooter.returnSpeedForDistance() - shooter.getVelocity()) < 50 && currentState.isStateAveliable(Superstructure.State.StateName.CONVEY_AND_SHOOT)) {
             currentState = conveyAndShoot;
-            return Superstructure.State.stateName.CONVEY_AND_SHOOT;
-
+            return Superstructure.State.StateName.CONVEY_AND_SHOOT;
 
 
         }
-        if (x.get() && currentState.isStateAveliable(Superstructure.State.stateName.WARMUP)) {
+        if (x.get() && currentState.isStateAveliable(Superstructure.State.StateName.WARMUP)) {
             currentState = warmUp;
-            return Superstructure.State.stateName.WARMUP;
+            return Superstructure.State.StateName.WARMUP;
         }
 
-        if (y.get() && currentState.isStateAveliable(Superstructure.State.stateName.REVERSE_PIPELINE)) {
+        if (y.get() && currentState.isStateAveliable(Superstructure.State.StateName.REVERSE_PIPELINE)) {
             currentState = reversePipeLine;
-            return Superstructure.State.stateName.REVERSE_PIPELINE;
+            return Superstructure.State.StateName.REVERSE_PIPELINE;
         } else {
             currentState = idle;
-            return Superstructure.State.stateName.Idle;
+            return Superstructure.State.StateName.Idle;
         }
 
+
+    }
+
+    public Superstructure.State getCurrentState() {
+        return currentState;
     }
 
     /**

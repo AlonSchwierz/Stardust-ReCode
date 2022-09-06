@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 import static frc.robot.Ports.Flap.SOLENOID;
 
@@ -34,7 +33,8 @@ public class Flap extends SubsystemBase {
     public void ShallNotPass() {
         flap.set(false);
     }
-    public void ShallToggle(){
+
+    public void ShallToggle() {
         flap.toggle();
     }
 }

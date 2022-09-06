@@ -14,31 +14,30 @@ public class Hood extends SubsystemBase {
     private final Solenoid angleChanger = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Hood.SOLENOID);
     private final BooleanLogEntry shortDistance;
 
-    public static Hood getInstance(){
-        if (INSTANCE == null){
-            INSTANCE = new Hood();
-        }
-        return INSTANCE;
-    }
-
     private Hood() {
         DataLog log = DataLogManager.getLog();
         shortDistance = new BooleanLogEntry(log, "/hood/isOpen");
     }
 
-    public void bigAngle(){
+    public static Hood getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Hood();
+        }
+        return INSTANCE;
+    }
+
+    public void bigAngle() {
         angleChanger.set(true);
     }
 
-    public void smallAngle(){
+    public void smallAngle() {
         angleChanger.set(false);
     }
 
-    public void changeAngleForDistance(){
-        if (Constants.Hood.DISTANCE_FROM_TARGET < Constants.Hood.DISTANCE_FOR_ANGLE){
+    public void changeAngleForDistance() {
+        if (Constants.Hood.DISTANCE_FROM_TARGET < Constants.Hood.DISTANCE_FOR_ANGLE) {
             smallAngle();
-        }
-        else{
+        } else {
             bigAngle();
         }
 
