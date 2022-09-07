@@ -13,6 +13,7 @@ import java.util.Deque;
 
 import static frc.robot.Ports.Conveyor.IS_COMPENSATING_VOLTAGE;
 import static frc.robot.Ports.Conveyor.MOTOR_INVERSION;
+import static frc.robot.subsystems.Superstructure.State.StateName.*;
 
 public class Conveyor extends SubsystemBase {
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Conveyor.MOTOR);
@@ -64,6 +65,28 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
+        switch (pipelineState.get()) {
+
+            case Idle:
+                setPower(0);
+                break;
+
+            case WARMUP:
+                setPower(0);
+                break;
+            case FEED_AND_CONVEY:
+                setPower(0.5);
+                break;
+            case CONVEY_AND_SHOOT:
+                setPower(0.5);
+                break;
+            case REVERSE_PIPELINE:
+                setPower(-0.5);
+                setPower(-0.5);
+                break;
+            default:
+                throw new IllegalStateException("Unknown State " + state.name());
+        }
         postFlapBeam.updateBeamBreaker();
         preFlapBeam.updateBeamBreaker();
         colorSensor.updateColorSensor();
