@@ -13,10 +13,14 @@ import frc.robot.subsystems.Superstructure;
 import java.util.function.Supplier;
 
 public class Hood extends SubsystemBase {
-    private final Supplier<Superstructure.State.StateName> pipelineState;
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static Hood INSTANCE;
     private final Solenoid angleChanger = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Hood.SOLENOID);
     private final BooleanLogEntry shortDistance;
+
+    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+        this.pipelineState = pipelineState;
+    }
 
     private Hood() {
         DataLog log = DataLogManager.getLog();
@@ -55,17 +59,17 @@ public class Hood extends SubsystemBase {
                 break;
 
             case WARMUP:
-                hood.changeAngleForDistance();
+                changeAngleForDistance();
                 break;
             case FEED_AND_CONVEY:
                 break;
             case CONVEY_AND_SHOOT:
-                hood.changeAngleForDistance();
+                changeAngleForDistance();
                 break;
             case REVERSE_PIPELINE:
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
     }
 }

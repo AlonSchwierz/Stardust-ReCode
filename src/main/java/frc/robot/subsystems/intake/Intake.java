@@ -11,12 +11,17 @@ import frc.robot.subsystems.Superstructure;
 
 import java.util.function.Supplier;
 
+import static frc.robot.subsystems.Superstructure.State.StateName.Idle;
+
 public class Intake extends SubsystemBase {
-    private final Supplier<Superstructure.State.StateName> pipelineState;
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Intake.MOTOR);
     private static final Solenoid retractor = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Intake.Solenoid);
     private static Intake INSTANCE;
 
+    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+        this.pipelineState = pipelineState;
+    }
 
     private Intake() {
         motor.setInverted(Ports.Intake.isMotorInverted);
@@ -76,7 +81,7 @@ public class Intake extends SubsystemBase {
                 setPower(-0.5);
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Idle);
         }
     }
 }

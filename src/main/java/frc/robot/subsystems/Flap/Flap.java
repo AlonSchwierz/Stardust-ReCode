@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import static frc.robot.Ports.Flap.SOLENOID;
 
 public class Flap extends SubsystemBase {
-    private final Supplier<Superstructure.State.StateName> pipelineState;
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static Flap INSTANCE;
     private final Solenoid flap = new Solenoid(PneumaticsModuleType.CTREPCM, SOLENOID);
     private final BooleanLogEntry isStopping;
@@ -28,6 +28,9 @@ public class Flap extends SubsystemBase {
             INSTANCE = new Flap();
         }
         return INSTANCE;
+    }
+    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+        this.pipelineState = pipelineState;
     }
 
     public void ShallPass() {
@@ -61,7 +64,7 @@ public class Flap extends SubsystemBase {
             case REVERSE_PIPELINE:
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
     }
 }

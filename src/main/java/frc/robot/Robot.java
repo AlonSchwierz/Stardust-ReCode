@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Conveyor.Conveyor;
+import frc.robot.subsystems.Superstructure;
 
 
 /**
@@ -24,6 +25,8 @@ public class Robot extends TimedRobot {
     private final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     private Command autonomousCommand;
     private RobotContainer robotContainer;
+
+    private Superstructure.State.StateName inputState;
 
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -57,6 +60,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("postFlap", Conveyor.getInstance().IsCargoInFrontOfPre());
         SmartDashboard.putBoolean("preFlap", Conveyor.getInstance().IsCargoInFrontOfPre());
         SmartDashboard.putString("CargoColor", Conveyor.getInstance().getColor());
+        RobotContainer.getInstance().getPipelineState();
 
     }
 

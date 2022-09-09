@@ -20,7 +20,7 @@ import static frc.robot.Ports.Shooter.MAIN_MOTOR;
 
 
 public class Shooter extends SubsystemBase {
-    private final Supplier<Superstructure.State.StateName> pipelineState;
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static Shooter INSTANCE;
     private final UnitModel unitModel = new UnitModel(TICKS_PER_REVOLUTION);
     private final WPI_TalonFX mainMotor = new WPI_TalonFX(MAIN_MOTOR);
@@ -36,6 +36,9 @@ public class Shooter extends SubsystemBase {
         }
 
         return INSTANCE;
+    }
+    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+        this.pipelineState = pipelineState;
     }
 
     public double getPower() {
@@ -109,13 +112,13 @@ public class Shooter extends SubsystemBase {
                 setPower(0);
                 break;
             case CONVEY_AND_SHOOT:
-                setVelocity(shooter.returnSpeedForDistance());
+                setVelocity(returnSpeedForDistance());
                 break;
             case REVERSE_PIPELINE:
-                shooter.setPower(0);
+                setPower(0);
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
     }
 }

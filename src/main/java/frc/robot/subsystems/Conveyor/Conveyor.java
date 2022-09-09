@@ -18,7 +18,7 @@ import static frc.robot.Ports.Conveyor.MOTOR_INVERSION;
 import static frc.robot.subsystems.Superstructure.State.StateName.*;
 
 public class Conveyor extends SubsystemBase {
-    private final Supplier<Superstructure.State.StateName> pipelineState;
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Conveyor.MOTOR);
     private static final BeamBreaker postFlapBeam = new BeamBreaker(Ports.Conveyor.postFlapBeam);
     private static final BeamBreaker preFlapBeam = new BeamBreaker(Ports.Conveyor.preFlapBeam);
@@ -88,7 +88,7 @@ public class Conveyor extends SubsystemBase {
                 setPower(-0.5);
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Idle);
         }
         postFlapBeam.updateBeamBreaker();
         preFlapBeam.updateBeamBreaker();
