@@ -6,16 +6,19 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.UnitModel;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.function.Supplier;
 
 import static frc.robot.Ports.Conveyor.IS_COMPENSATING_VOLTAGE;
 import static frc.robot.Ports.Conveyor.MOTOR_INVERSION;
 import static frc.robot.subsystems.Superstructure.State.StateName.*;
 
 public class Conveyor extends SubsystemBase {
+    private final Supplier<Superstructure.State.StateName> pipelineState;
     private static final WPI_TalonFX motor = new WPI_TalonFX(Ports.Conveyor.MOTOR);
     private static final BeamBreaker postFlapBeam = new BeamBreaker(Ports.Conveyor.postFlapBeam);
     private static final BeamBreaker preFlapBeam = new BeamBreaker(Ports.Conveyor.preFlapBeam);

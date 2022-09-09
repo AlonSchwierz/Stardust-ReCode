@@ -8,7 +8,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.UnitModel;
+
+import java.util.function.Supplier;
 
 import static frc.robot.Constants.SHOOTER.TICKS_PER_REVOLUTION;
 import static frc.robot.Constants.SHOOTER.getConfiguration;
@@ -17,6 +20,7 @@ import static frc.robot.Ports.Shooter.MAIN_MOTOR;
 
 
 public class Shooter extends SubsystemBase {
+    private final Supplier<Superstructure.State.StateName> pipelineState;
     private static Shooter INSTANCE;
     private final UnitModel unitModel = new UnitModel(TICKS_PER_REVOLUTION);
     private final WPI_TalonFX mainMotor = new WPI_TalonFX(MAIN_MOTOR);
@@ -92,5 +96,26 @@ public class Shooter extends SubsystemBase {
         mainMotor.config_kI(0, Constants.SHOOTER.kI);
         mainMotor.config_kD(0, Constants.SHOOTER.kD);
         mainMotor.config_kF(0, Constants.SHOOTER.kF);
+        switch (pipelineState.get()) {
+
+            case Idle:
+                setPower(0);
+                break;
+
+            case WARMUP:
+                setVelocity(returnSpeedForDistance());
+                break;
+            case FEED_AND_CONVEY:
+                setPower(0);
+                break;
+            case CONVEY_AND_SHOOT:
+                setVelocity(shooter.returnSpeedForDistance());
+                break;
+            case REVERSE_PIPELINE:
+                shooter.setPower(0);
+                break;
+            default:
+                throw new IllegalStateException("Unknown State " + state.name());
+        }
     }
 }

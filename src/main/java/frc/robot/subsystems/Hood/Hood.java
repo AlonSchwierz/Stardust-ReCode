@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.subsystems.Superstructure;
+
+import java.util.function.Supplier;
 
 public class Hood extends SubsystemBase {
+    private final Supplier<Superstructure.State.StateName> pipelineState;
     private static Hood INSTANCE;
     private final Solenoid angleChanger = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.Hood.SOLENOID);
     private final BooleanLogEntry shortDistance;
@@ -41,5 +45,27 @@ public class Hood extends SubsystemBase {
             bigAngle();
         }
 
+    }
+
+    @Override
+    public void periodic() {
+        switch (pipelineState.get()) {
+
+            case Idle:
+                break;
+
+            case WARMUP:
+                hood.changeAngleForDistance();
+                break;
+            case FEED_AND_CONVEY:
+                break;
+            case CONVEY_AND_SHOOT:
+                hood.changeAngleForDistance();
+                break;
+            case REVERSE_PIPELINE:
+                break;
+            default:
+                throw new IllegalStateException("Unknown State " + state.name());
+        }
     }
 }
