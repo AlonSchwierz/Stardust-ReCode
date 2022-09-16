@@ -16,8 +16,12 @@ public class PipeLine extends CommandBase {
     private final Shooter shooter = Shooter.getInstance();
     private final Flap flap = Flap.getInstance();
     private final Hood hood = Hood.getInstance();
+<<<<<<< Updated upstream
 
     private final Superstructure.State.StateName state = Superstructure.State.StateName.Idle;
+=======
+    private final Superstructure.State.stateName state = Superstructure.State.stateName.Idle;
+>>>>>>> Stashed changes
 
     public PipeLine(Supplier<Superstructure.State.StateName> pipelineState) {
         this.pipelineState = pipelineState;
