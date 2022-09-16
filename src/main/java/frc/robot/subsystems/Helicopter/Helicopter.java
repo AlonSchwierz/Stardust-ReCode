@@ -1,4 +1,4 @@
-package frc.robot.subsystems.helicopter;
+package frc.robot.subsystems.Helicopter;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;

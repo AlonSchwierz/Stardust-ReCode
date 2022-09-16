@@ -7,7 +7,10 @@ import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
+import java.util.Stack;
 import java.util.function.Supplier;
+
+import static javax.print.attribute.standard.PrinterState.IDLE;
 
 public class PipeLine extends CommandBase {
     private final Supplier<Superstructure.State.StateName> pipelineState;
@@ -16,8 +19,7 @@ public class PipeLine extends CommandBase {
     private final Shooter shooter = Shooter.getInstance();
     private final Flap flap = Flap.getInstance();
     private final Hood hood = Hood.getInstance();
-    private final Superstructure.State.stateName state = Superstructure.State.stateName.Idle;
->>>>>>> Stashed changes
+    private final Superstructure.State.StateName state = Superstructure.State.StateName.Idle;
 
     public PipeLine(Supplier<Superstructure.State.StateName> pipelineState) {
         this.pipelineState = pipelineState;
@@ -61,7 +63,7 @@ public class PipeLine extends CommandBase {
                 shooter.setPower(0);
                 break;
             default:
-                throw new IllegalStateException("Unknown State " + state.name());
+                throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
     }
 

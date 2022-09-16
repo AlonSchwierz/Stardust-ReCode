@@ -92,13 +92,12 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-//        FireLog.log("Shooter-velocity", getVelocity());
-//        System.out.println("Shooter'd velocity: " + mainMotor.getSelectedSensorVelocity());
 
         mainMotor.config_kP(0, Constants.SHOOTER.kP);
         mainMotor.config_kI(0, Constants.SHOOTER.kI);
         mainMotor.config_kD(0, Constants.SHOOTER.kD);
         mainMotor.config_kF(0, Constants.SHOOTER.kF);
+
         switch (pipelineState.get()) {
 
             case Idle:

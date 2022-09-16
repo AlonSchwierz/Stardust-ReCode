@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
 
 
-        //checkConveyorSensors
+        RobotContainer.getInstance().getPipelineState();
         CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("postFlap", Conveyor.getInstance().IsCargoInFrontOfPre());
         SmartDashboard.putBoolean("preFlap", Conveyor.getInstance().IsCargoInFrontOfPre());

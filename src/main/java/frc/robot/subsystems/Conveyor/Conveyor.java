@@ -85,7 +85,6 @@ public class Conveyor extends SubsystemBase {
                 break;
             case REVERSE_PIPELINE:
                 setPower(-0.5);
-                setPower(-0.5);
                 break;
             default:
                 throw new IllegalStateException("Unknown State " + Idle);
