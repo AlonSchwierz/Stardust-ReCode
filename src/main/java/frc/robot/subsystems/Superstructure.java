@@ -7,6 +7,10 @@ import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Superstructure extends SubsystemBase {
     private final Intake intake = Intake.getInstance();
     private final Conveyor conveyor = Conveyor.getInstance();
@@ -56,21 +60,19 @@ public class Superstructure extends SubsystemBase {
     public static class State {
 
         StateName thisStateName;
-        StateName nextAvliableState1;
-        StateName nextAvliableState2;
-        StateName nextAvliableState3;
-        StateName nextAvliableState4;
-        public State(StateName thisStateName, StateName nextAvliableState1, StateName nextAvliableState2, StateName nextAvliableState3, StateName nextAvliableState4) {
-            this.thisStateName = thisStateName;
-            this.nextAvliableState1 = nextAvliableState1;
-            this.nextAvliableState2 = nextAvliableState2;
-            this.nextAvliableState3 = nextAvliableState3;
-            this.nextAvliableState4 = nextAvliableState4;
+        ArrayList<StateName> nextAvailableStates;
 
+        public State(StateName thisStateName, StateName... nextAvailableStates) {
+            this.thisStateName = thisStateName;
+            this.nextAvailableStates = new ArrayList<>(Arrays.asList(nextAvailableStates));
+        }
+        public State(StateName thisStateName, ArrayList<StateName> nextAvailableStates) {
+            this.thisStateName = thisStateName;
+            this.nextAvailableStates = nextAvailableStates;
         }
 
         public boolean isStateAveliable(StateName wantedState) {
-            return wantedState == this.nextAvliableState1 || wantedState == this.nextAvliableState2 || wantedState == this.nextAvliableState3 || wantedState == this.nextAvliableState4;
+            return nextAvailableStates.contains(wantedState);
         }
 
         public enum StateName {

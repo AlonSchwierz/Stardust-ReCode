@@ -102,6 +102,11 @@ public final class Constants {
         public static final double DISTANCE_FROM_TARGET = 0;
 
 
+        public static final double TICKS_PER_DEGREE =0 ;
+        public static final double TICKS_PER_RAD_ABSOLUTE_ENCODER = 0;
+        public static final double ZERO_POSITION = 0;
+        public static final double MAX_VELOCITY = 0;
+        public static final double MAX_ACCELERATION = 0;
     }
 
     public static class intake {

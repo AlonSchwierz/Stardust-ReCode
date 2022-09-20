@@ -46,6 +46,8 @@ public class Ports {
         public static final boolean IS_COMPENSATING_VOLTAGE = true;
 
 
+        public static final int MOTOR_FROM_INTAKE = 0;
+        public static final int MOTOR_TO_SHOOTER = 0;
     }
 
     public static class Shooter {

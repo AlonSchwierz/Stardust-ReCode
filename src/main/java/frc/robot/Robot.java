@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Conveyor.Conveyor;
 import frc.robot.subsystems.Superstructure;
 
 
@@ -56,9 +55,6 @@ public class Robot extends TimedRobot {
 
 
         CommandScheduler.getInstance().run();
-        SmartDashboard.putBoolean("postFlap", Conveyor.getInstance().IsCargoInFrontOfPre());
-        SmartDashboard.putBoolean("preFlap", Conveyor.getInstance().IsCargoInFrontOfPre());
-        SmartDashboard.putString("CargoColor", Conveyor.getInstance().getColor());
         RobotContainer.getInstance().getPipelineState();
 
     }
