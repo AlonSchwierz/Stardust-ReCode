@@ -1,4 +1,4 @@
-package frc.robot.subsystems.conveyor;
+package frc.robot.subsystems.Conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.subsystems.LoggedSubsystem;
 
 public class Conveyor extends SubsystemBase {
     private static Conveyor INSTANCE = null;
@@ -104,10 +103,10 @@ public class Conveyor extends SubsystemBase {
 
 
 
-    @Override
-    public String getSubsystemName() {
-        return "Conveyor";
-    }
+//    @Override
+//    public String getSubsystemName() {
+//        return "Conveyor";
+//    }
 
     @Override
     public void periodic() {
