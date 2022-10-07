@@ -13,8 +13,12 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.subsystems.Superstructure;
+
+import java.util.function.Supplier;
 
 public class Conveyor extends SubsystemBase {
+    private Supplier<Superstructure.State.StateName> pipelineState;
     private static Conveyor INSTANCE = null;
     private final WPI_TalonFX motorFromIntake;
     private final WPI_TalonFX motorToShooter;
@@ -24,7 +28,9 @@ public class Conveyor extends SubsystemBase {
     private final ColorMatch colorMatch;
     private Color currentColorSensed = Constants.Conveyor.NONE;
     private Color lastColorSensed;
-
+    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+        this.pipelineState = pipelineState;
+    }
     private Conveyor() {
 
         motorFromIntake = new WPI_TalonFX(Ports.Conveyor.MOTOR_FROM_INTAKE);
@@ -112,6 +118,29 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         lastColorSensed = currentColorSensed;
         currentColorSensed = getColor();
+        switch(pipelineState.get()){
+            case Idle:
+                feedFromIntake(0);
+                feedToShooter(0);
+                break;
+
+            case WARMUP:
+                feedToShooter(0);
+                break;
+            case FEED_AND_CONVEY:
+                feedFromIntake(0.5);
+                break;
+            case CONVEY_AND_SHOOT:
+                feedFromIntake(0);
+                feedToShooter(0.5);
+                break;
+            case REVERSE_PIPELINE:
+                feedToShooter(-0.5);
+                feedFromIntake(-0.5);
+                break;
+            default:
+                throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
+        }
     }
 
     public static class MotorsState {

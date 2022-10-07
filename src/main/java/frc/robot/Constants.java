@@ -101,12 +101,14 @@ public final class Constants {
         public static final double DISTANCE_FOR_ANGLE = 0;
         public static final double DISTANCE_FROM_TARGET = 0;
 
-
+        public static final double GEAR_RATIO = 106.88;
         public static final double TICKS_PER_DEGREE =0 ;
         public static final double TICKS_PER_RAD_ABSOLUTE_ENCODER = 0;
         public static final double ZERO_POSITION = 0;
         public static final double MAX_VELOCITY = 0;
         public static final double MAX_ACCELERATION = 0;
+        public static final double TOP_SOFT_LIMIT = (0.86 * 2048 - ZERO_POSITION) * Constants.Hood.GEAR_RATIO;
+        public static final double BOTTOM_SOFT_LIMIT = (0.75 * 2048 - ZERO_POSITION) * Constants.Hood.GEAR_RATIO;
     }
 
     public static class intake {
