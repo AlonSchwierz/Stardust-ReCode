@@ -28,9 +28,11 @@ public class Conveyor extends SubsystemBase {
     private final ColorMatch colorMatch;
     private Color currentColorSensed = Constants.Conveyor.NONE;
     private Color lastColorSensed;
-    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+
+    private void pipelineState(Supplier<Superstructure.State.StateName> pipelineState) {
         this.pipelineState = pipelineState;
     }
+
     private Conveyor() {
 
         motorFromIntake = new WPI_TalonFX(Ports.Conveyor.MOTOR_FROM_INTAKE);
@@ -108,27 +110,20 @@ public class Conveyor extends SubsystemBase {
     }
 
 
-
-//    @Override
-//    public String getSubsystemName() {
-//        return "Conveyor";
-//    }
-
     @Override
     public void periodic() {
         lastColorSensed = currentColorSensed;
         currentColorSensed = getColor();
-        switch(pipelineState.get()){
-            case Idle:
-                feedFromIntake(0);
-                feedToShooter(0);
-                break;
+        switch (pipelineState.get()) {
 
+            case Idle:
             case WARMUP:
+                feedToShooter(0);
                 feedToShooter(0);
                 break;
             case FEED_AND_CONVEY:
                 feedFromIntake(0.5);
+                feedToShooter(0);
                 break;
             case CONVEY_AND_SHOOT:
                 feedFromIntake(0);

@@ -24,7 +24,8 @@ public class Hood extends SubsystemBase {
     private final UnitModel unitModelPosition = new UnitModel(Constants.Hood.TICKS_PER_DEGREE);
     private final UnitModel unitModelPositionAbsolute = new UnitModel(Constants.Hood.TICKS_PER_RAD_ABSOLUTE_ENCODER);
     private double setpoint;
-    private void pipelineState (Supplier<Superstructure.State.StateName> pipelineState){
+
+    private void pipelineState(Supplier<Superstructure.State.StateName> pipelineState) {
         this.pipelineState = pipelineState;
     }
 
@@ -73,14 +74,8 @@ public class Hood extends SubsystemBase {
 
     public boolean atSetpoint(double tolerance) {
         return Utils.deadband(getAngle() - setpoint, tolerance) == 0;
-    }}
+    }
 
-//    public void updatePID() {
-//        motor.config_kP(0, webKp.get());
-//        motor.config_kI(0, webKi.get());
-//        motor.config_kD(0, webKd.get());
-//        motor.config_kF(0, webKf.get());
-//    }
 
     public void configSoftLimits(boolean enable) {
         motor.configReverseSoftLimitEnable(enable);
@@ -91,39 +86,20 @@ public class Hood extends SubsystemBase {
 
     @Override
     public void periodic() {
-     //   updatePID();
-        switch(pipelineState.get()){
+        //   updatePID();
+        switch (pipelineState.get()) {
+
 
             case Idle:
-                setAngle(8);
-                break;
             case WARMUP:
+            case FEED_AND_CONVEY:
+            case CONVEY_AND_SHOOT:
+            case REVERSE_PIPELINE:
                 setAngle(8);
                 break;
-            case FEED_AND_CONVEY:
-                break;
-            case CONVEY_AND_SHOOT:
-                break;
-            case REVERSE_PIPELINE:
-                break;
+
             default:
                 throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
-    }
-
-    public void updateInputs() {
-        @Override
-                inputs.ticks = encoder.get();
-        inputs.angle = getAngle();
-        inputs.setpoint = setpoint;
-        inputs.velocity = getVelocity();
-        inputs.busVoltage = motor.getBusVoltage();
-        inputs.outputCurrent = motor.getSupplyCurrent();
-        inputs.temperatureCelsius = motor.getTemperature();
-    }
-
-    @Override
-    public String getSubsystemName() {
-        return "Hood";
     }
 }

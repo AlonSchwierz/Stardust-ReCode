@@ -62,22 +62,16 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         switch (pipelineState.get()) {
-
-            case Idle:
+            case Idle: case WARMUP: case CONVEY_AND_SHOOT:
                 setPower(0);
-                break;
-
-            case WARMUP:
-                setPower(0);
+                closeREEEtractor();
                 break;
             case FEED_AND_CONVEY:
                 openREEEtractor();
                 setPower(0.5);
                 break;
-            case CONVEY_AND_SHOOT:
-                setPower(0);
-                break;
             case REVERSE_PIPELINE:
+                openREEEtractor();
                 setPower(-0.5);
                 break;
             default:

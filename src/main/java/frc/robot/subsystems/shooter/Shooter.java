@@ -107,15 +107,19 @@ public class Shooter extends SubsystemBase {
             case WARMUP:
                 setVelocity(returnSpeedForDistance());
                 break;
+
             case FEED_AND_CONVEY:
                 setPower(0);
                 break;
+
             case CONVEY_AND_SHOOT:
                 setVelocity(returnSpeedForDistance());
                 break;
+
             case REVERSE_PIPELINE:
                 setPower(0);
                 break;
+
             default:
                 throw new IllegalStateException("Unknown State " + Superstructure.State.StateName.Idle);
         }
